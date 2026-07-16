@@ -11,7 +11,7 @@ export const signup = async (req, res) => {
     if (!email || !password) {
         return res.status(400).json({ message: "Email and pasword are required" });
     }
-    
+
     try {
         if(!fullName || !email || !password){
             return res.status(400).json({ message:" All fields are required" });
@@ -88,7 +88,7 @@ export const login = async (req, res) => {
     }
 };
 
-export const logout = async (_, res) => {
+export const logout = (_, res) => {
     res.cookie("jwt", "", { maxAge:0 });
     res.status(200).json({ message: "Logged out successfully" });
 };
