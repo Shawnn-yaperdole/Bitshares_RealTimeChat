@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
   },
-  { timestamps: true } // createdAt & updatedAt
+  { timestamps: true } 
 );
 
 const User = mongoose.model("User", userSchema);
