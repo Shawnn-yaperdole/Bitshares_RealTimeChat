@@ -42,7 +42,10 @@ function MessageInput() {
   };
 
   return (
-    <div className="p-4 border-t border-slate-700/50">
+    <div
+      className="p-4 border-t border-slate-700/50 flex-shrink-0"
+      style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
+    >
       {imagePreview && (
         <div className="max-w-3xl mx-auto mb-3 flex items-center">
           <div className="relative">
