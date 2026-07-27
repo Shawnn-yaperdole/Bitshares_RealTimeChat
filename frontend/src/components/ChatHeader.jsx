@@ -25,7 +25,7 @@ function ChatHeader() {
 
   return (
     <div
-      className="sticky top-0 z-20 flex justify-between items-center bg-slate-800/50 border-b
+      className="flex justify-between items-center bg-slate-800/50 border-b
    border-slate-700/50 px-3 sm:px-4 md:px-6 py-3 flex-shrink-0"
       style={{ paddingTop: "max(0.75rem, env(safe-area-inset-top))" }}
     >
