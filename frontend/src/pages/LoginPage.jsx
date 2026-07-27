@@ -13,10 +13,14 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-dvh w-full flex items-center justify-center p-4 bg-slate-900 overflow-y-auto">
-      <div className="relative w-full max-w-6xl h-auto min-h-[650px] md:h-[800px]">
+    <div className="h-dvh w-full flex items-center justify-center p-4 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 overflow-hidden relative">
+      {/* AMBIENT BACKGROUND GLOW */}
+      <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/3 w-[400px] h-[400px] bg-slate-500/10 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="relative w-full max-w-6xl h-full max-h-[800px]">
         <div className="relative w-full h-full overflow-hidden rounded-2xl">
-          <div className="w-full flex flex-col md:flex-row">
+          <div className="w-full h-full flex flex-col md:flex-row">
             {/* FORM CLOUMN - LEFT SIDE */}
             <div className="md:w-1/2 p-8 flex items-center justify-center md:border-r border-slate-600/30">
               <div className="w-full max-w-md">
@@ -80,7 +84,7 @@ function LoginPage() {
             </div>
 
             {/* FORM ILLUSTRATION - RIGHT SIDE */}
-            <div className="hidden md:w-1/2 md:flex items-center justify-center p-6 bg-gradient-to-bl from-slate-800/20 to-transparent">
+            <div className="hidden md:w-1/2 md:flex items-center justify-center p-6 bg-gradient-to-bl from-cyan-500/10 via-slate-800/10 to-transparent">
               <div>
                 <img
                   src="/login.png"
