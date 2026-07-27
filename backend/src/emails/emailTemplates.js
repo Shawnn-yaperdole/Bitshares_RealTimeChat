@@ -10,15 +10,15 @@ export function createWelcomeEmailTemplate(name, clientURL) {
     <title>Welcome to Bitshares Chat</title>
   </head>
   <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f5f5f5;">
-    <div style="background: linear-gradient(to right, #36D1DC, #5B86E5); padding: 30px; text-align: center; border-radius: 12px 12px 0 0;">
-      <img src="${LOGO_URL}" alt="Bitshares Logo" style="width: 80px; height: 80px; margin-bottom: 20px; border-radius: 50%; background-color: white; padding: 10px;">
+    <div style="background: linear-gradient(to right, #8E2DE2, #FF5F6D); padding: 30px; text-align: center; border-radius: 12px 12px 0 0;">
+      <img src="${LOGO_URL}" alt="Bitshares Logo" style="max-width: 160px; height: auto; margin-bottom: 20px;">
       <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 500;">Welcome to Bitshares!</h1>
     </div>
     <div style="background-color: #ffffff; padding: 35px; border-radius: 0 0 12px 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-      <p style="font-size: 18px; color: #5B86E5;"><strong>Hello ${name},</strong></p>
+      <p style="font-size: 18px; color: #8E2DE2;"><strong>Hello ${name},</strong></p>
       <p>We're excited to have you join our platform! Bitshares chat connects you with other users, Bitshares staffs, and colleagues in real-time, no matter where they are.</p>
       
-      <div style="background-color: #f8f9fa; padding: 25px; border-radius: 10px; margin: 25px 0; border-left: 4px solid #36D1DC;">
+      <div style="background-color: #f8f9fa; padding: 25px; border-radius: 10px; margin: 25px 0; border-left: 4px solid #8E2DE2;">
         <p style="font-size: 16px; margin: 0 0 15px 0;"><strong>Get started in just a few steps:</strong></p>
         <ul style="padding-left: 20px; margin: 0;">
           <li style="margin-bottom: 10px;">Set up your profile picture</li>
@@ -29,7 +29,7 @@ export function createWelcomeEmailTemplate(name, clientURL) {
       </div>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href="${clientURL}" style="background: linear-gradient(to right, #36D1DC, #5B86E5); color: white; text-decoration: none; padding: 12px 30px; border-radius: 50px; font-weight: 500; display: inline-block;">Open Bitshares Chat</a>
+        <a href="${clientURL}" style="background: linear-gradient(to right, #8E2DE2, #FF5F6D); color: white; text-decoration: none; padding: 12px 30px; border-radius: 50px; font-weight: 500; display: inline-block;">Open Bitshares Chat</a>
       </div>
       
       <p style="margin-bottom: 5px;">If you need any help or have questions, we're always here to assist you.</p>
@@ -41,9 +41,9 @@ export function createWelcomeEmailTemplate(name, clientURL) {
     <div style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
       <p>© 2026 Bitshares. All rights reserved.</p>
       <p>
-        <a href="#" style="color: #5B86E5; text-decoration: none; margin: 0 10px;">Privacy Policy</a>
-        <a href="#" style="color: #5B86E5; text-decoration: none; margin: 0 10px;">Terms of Service</a>
-        <a href="#" style="color: #5B86E5; text-decoration: none; margin: 0 10px;">Contact Us</a>
+        <a href="#" style="color: #8E2DE2; text-decoration: none; margin: 0 10px;">Privacy Policy</a>
+        <a href="#" style="color: #8E2DE2; text-decoration: none; margin: 0 10px;">Terms of Service</a>
+        <a href="#" style="color: #8E2DE2; text-decoration: none; margin: 0 10px;">Contact Us</a>
       </p>
     </div>
   </body>
