@@ -103,7 +103,7 @@ function ChatContainer() {
           </div>
         )}
 
-        <div className="flex-1 min-h-0 px-3 sm:px-6 overflow-y-auto py-4 sm:py-8">
+        <div className="flex-1 min-h-0 px-3 sm:px-6 overflow-y-auto overscroll-contain py-4 sm:py-8">
           {messages.length > 0 && !isMessagesLoading ? (
             <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
               {messages.map((msg) => {
