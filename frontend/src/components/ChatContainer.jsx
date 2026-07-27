@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useLayoutEffect } from "react";
 import { MoreVerticalIcon } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
@@ -24,6 +24,33 @@ function ChatContainer() {
   const [openMenuId, setOpenMenuId] = useState(null);
   const [pendingDeleteId, setPendingDeleteId] = useState(null);
   const menuRef = useRef(null);
+
+  const headerRef = useRef(null);
+  const inputRef = useRef(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const [inputHeight, setInputHeight] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Track whether we're at a mobile breakpoint
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  // Measure header/input actual rendered height so messages padding always matches exactly
+  useLayoutEffect(() => {
+    if (!isMobile) return;
+    const measure = () => {
+      if (headerRef.current) setHeaderHeight(headerRef.current.offsetHeight);
+      if (inputRef.current) setInputHeight(inputRef.current.offsetHeight);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [isMobile, selectedUser]);
 
   useEffect(() => {
     getMessagesByUserId(selectedUser._id);
@@ -76,7 +103,9 @@ function ChatContainer() {
 
   return (
     <>
-      <ChatHeader />
+      <div ref={headerRef} className={isMobile ? "fixed top-0 inset-x-0 z-20" : ""}>
+        <ChatHeader />
+      </div>
 
       <div className="relative flex-1 flex flex-col min-h-0">
         {activeMessage && (
@@ -103,7 +132,10 @@ function ChatContainer() {
           </div>
         )}
 
-        <div className="flex-1 min-h-0 px-3 sm:px-6 overflow-y-auto overscroll-contain py-4 sm:py-8">
+        <div
+          className="flex-1 min-h-0 px-3 sm:px-6 overflow-y-auto overscroll-contain py-4 sm:py-8"
+          style={isMobile ? { paddingTop: headerHeight, paddingBottom: inputHeight } : undefined}
+        >
           {messages.length > 0 && !isMessagesLoading ? (
             <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
               {messages.map((msg) => {
@@ -169,7 +201,9 @@ function ChatContainer() {
         </div>
       </div>
 
-      <MessageInput />
+      <div ref={inputRef} className={isMobile ? "fixed bottom-0 inset-x-0 z-20" : ""}>
+        <MessageInput />
+      </div>
 
       {pendingDeleteId && (
         <ConfirmDialog
