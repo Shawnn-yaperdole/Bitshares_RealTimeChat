@@ -103,7 +103,7 @@ function ChatContainer() {
 
   return (
     <>
-      <div ref={headerRef} className={isMobile ? "fixed top-0 left-0 right-0 h-16 inset-x-0 z-20" : ""}>
+      <div ref={headerRef} className={isMobile ? "fixed top-0 left-0 right-0 z-50 bg-slate-900 border-b border-slate-800" : ""}>
         <ChatHeader />
       </div>
 
