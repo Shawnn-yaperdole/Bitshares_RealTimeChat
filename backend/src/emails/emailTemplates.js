@@ -1,4 +1,26 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const logoPath = path.join(__dirname, '../../frontend/public/logo.png');
+let logoBase64 = '';
+
+try {
+  const logoBuffer = fs.readFileSync(logoPath);
+  logoBase64 = logoBuffer.toString('base64');
+} catch (error) {
+  console.error('Logo not found, using fallback:', error.message);
+  logoBase64 = ''; 
+}
+
+
+
 export function createWelcomeEmailTemplate(name, clientURL) {
+  const logoDataUrl = logoBase64 ? `data:image/png;base64,${logoBase64}` : 'https://bitshareschat.onrender.com/logo.png';
+  
   return `
   <!DOCTYPE html>
   <html lang="en">
