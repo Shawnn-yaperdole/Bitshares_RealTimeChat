@@ -13,7 +13,7 @@ function SignUpPage() {
   };
 
   return (
-    <div className="relative w-full h-full md:h-[min(800px,90dvh)] md:max-w-6xl overflow-hidden">
+    <div className="relative w-full h-dvh md:h-[min(800px,90dvh)] md:max-w-6xl overflow-hidden">
       {/* AMBIENT GLOW - scoped to the card, complements App's page-level glows */}
       <div className="absolute -top-10 -left-10 w-64 h-64 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-slate-400/10 rounded-full blur-[100px] pointer-events-none" />
