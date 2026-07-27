@@ -5,21 +5,36 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const logoPath = path.join(__dirname, '../../frontend/public/logo.png');
 let logoBase64 = '';
+let logoFound = false;
 
-try {
-  const logoBuffer = fs.readFileSync(logoPath);
-  logoBase64 = logoBuffer.toString('base64');
-} catch (error) {
-  console.error('Logo not found, using fallback:', error.message);
-  logoBase64 = ''; 
+const possiblePaths = [
+  path.join(__dirname, '../../frontend/public/logo.png'),
+  path.join(__dirname, '../public/logo.png'),
+  path.join(__dirname, '../../public/logo.png'),
+  path.join(process.cwd(), 'frontend/public/logo.png'),
+  path.join(process.cwd(), 'public/logo.png'),
+];
+
+for (const testPath of possiblePaths) {
+  try {
+    if (fs.existsSync(testPath)) {
+      const logoBuffer = fs.readFileSync(testPath);
+      logoBase64 = logoBuffer.toString('base64');
+      logoFound = true;
+      console.log(`Logo found at: ${testPath}`);
+      break;
+    }
+  } catch (error) {
+  }
 }
 
-
+if (!logoFound) {
+  console.warn('Logo not found in any expected location. Using fallback URL.');
+}
 
 export function createWelcomeEmailTemplate(name, clientURL) {
-  const logoDataUrl = logoBase64 ? `data:image/png;base64,${logoBase64}` : 'https://bitshareschat.onrender.com/logo.png';
+  const logoSrc = logoBase64 ? `data:image/png;base64,${logoBase64}` : 'https://bitshareschat.onrender.com/logo.png';
   
   return `
   <!DOCTYPE html>
@@ -31,7 +46,7 @@ export function createWelcomeEmailTemplate(name, clientURL) {
   </head>
   <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f5f5f5;">
     <div style="background: linear-gradient(to right, #36D1DC, #5B86E5); padding: 30px; text-align: center; border-radius: 12px 12px 0 0;">
-      <img src="https://bitshareschat.onrender.com/logo.png" alt="Bitshares Logo" style="width: 80px; height: 80px; margin-bottom: 20px; border-radius: 50%; background-color: white; padding: 10px;">
+      <img src="${logoSrc}" alt="Bitshares Logo" style="width: 80px; height: 80px; margin-bottom: 20px; border-radius: 50%; background-color: white; padding: 10px;">
       <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 500;">Welcome to Bitshares!</h1>
     </div>
     <div style="background-color: #ffffff; padding: 35px; border-radius: 0 0 12px 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
@@ -49,7 +64,7 @@ export function createWelcomeEmailTemplate(name, clientURL) {
       </div>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href=${clientURL} style="background: linear-gradient(to right, #36D1DC, #5B86E5); color: white; text-decoration: none; padding: 12px 30px; border-radius: 50px; font-weight: 500; display: inline-block;">Open Bitshares Chat</a>
+        <a href="${clientURL}" style="background: linear-gradient(to right, #36D1DC, #5B86E5); color: white; text-decoration: none; padding: 12px 30px; border-radius: 50px; font-weight: 500; display: inline-block;">Open Bitshares Chat</a>
       </div>
       
       <p style="margin-bottom: 5px;">If you need any help or have questions, we're always here to assist you.</p>
