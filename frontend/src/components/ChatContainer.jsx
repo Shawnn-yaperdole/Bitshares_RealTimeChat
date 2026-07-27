@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useLayoutEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MoreVerticalIcon } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
@@ -24,33 +24,6 @@ function ChatContainer() {
   const [openMenuId, setOpenMenuId] = useState(null);
   const [pendingDeleteId, setPendingDeleteId] = useState(null);
   const menuRef = useRef(null);
-
-  const headerRef = useRef(null);
-  const inputRef = useRef(null);
-  const [headerHeight, setHeaderHeight] = useState(0);
-  const [inputHeight, setInputHeight] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Track whether we're at a mobile breakpoint
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    const update = () => setIsMobile(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  // Measure header/input actual rendered height so messages padding always matches exactly
-  useLayoutEffect(() => {
-    if (!isMobile) return;
-    const measure = () => {
-      if (headerRef.current) setHeaderHeight(headerRef.current.offsetHeight);
-      if (inputRef.current) setInputHeight(inputRef.current.offsetHeight);
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, [isMobile, selectedUser]);
 
   useEffect(() => {
     getMessagesByUserId(selectedUser._id);
@@ -102,40 +75,15 @@ function ChatContainer() {
   const activeMessage = messages.find((m) => m._id === openMenuId);
 
   return (
-    <>
-      <div ref={headerRef} className={isMobile ? "fixed top-0 left-0 right-0 z-50 bg-slate-900 border-b border-slate-800" : ""}>
+    <div className="flex flex-col h-full">
+      {/* Header - sticky on mobile, normal on desktop */}
+      <div className="sticky top-0 z-50 bg-slate-900 border-b border-slate-700 shadow-md">
         <ChatHeader />
       </div>
 
-      <div className="relative flex-1 flex flex-col min-h-0">
-        {activeMessage && (
-          <div className="absolute inset-0 flex items-center justify-center z-30 px-6 pointer-events-none">
-            <div
-              ref={menuRef}
-              className="pointer-events-auto bg-slate-800 border border-slate-700 rounded-lg shadow-lg py-1 w-48 max-w-[85vw]"
-            >
-              <button
-                onClick={() => handleDelete(activeMessage._id, "me")}
-                className="w-full text-left px-4 py-2 text-sm text-slate-200 hover:bg-slate-700"
-              >
-                Delete for me
-              </button>
-              {activeMessage.senderId === authUser._id && (
-                <button
-                  onClick={() => handleDelete(activeMessage._id, "everyone")}
-                  className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-slate-700"
-                >
-                  Delete for everyone
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
-        <div
-          className="flex-1 min-h-0 px-3 sm:px-6 overflow-y-auto overscroll-contain py-4 sm:py-8"
-          style={isMobile ? { paddingTop: headerHeight, paddingBottom: inputHeight } : undefined}
-        >
+      {/* Scrollable messages area */}
+      <div className="flex-1 overflow-y-auto overscroll-contain">
+        <div className="px-3 sm:px-6 py-4 sm:py-8">
           {messages.length > 0 && !isMessagesLoading ? (
             <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
               {messages.map((msg) => {
@@ -201,10 +149,37 @@ function ChatContainer() {
         </div>
       </div>
 
-      <div ref={inputRef} className={isMobile ? "fixed bottom-0 inset-x-0 z-20" : ""}>
+      {/* Message Input - sticky on mobile */}
+      <div className="sticky bottom-0 z-50 bg-slate-900 border-t border-slate-700 shadow-md">
         <MessageInput />
       </div>
 
+      {/* Context Menu Overlay */}
+      {activeMessage && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center px-6 bg-black/30">
+          <div
+            ref={menuRef}
+            className="bg-slate-800 border border-slate-700 rounded-lg shadow-lg py-1 w-48 max-w-[85vw]"
+          >
+            <button
+              onClick={() => handleDelete(activeMessage._id, "me")}
+              className="w-full text-left px-4 py-2 text-sm text-slate-200 hover:bg-slate-700"
+            >
+              Delete for me
+            </button>
+            {activeMessage.senderId === authUser._id && (
+              <button
+                onClick={() => handleDelete(activeMessage._id, "everyone")}
+                className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-slate-700"
+              >
+                Delete for everyone
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Confirm Dialog */}
       {pendingDeleteId && (
         <ConfirmDialog
           title="Delete for everyone?"
@@ -214,7 +189,7 @@ function ChatContainer() {
           onCancel={() => setPendingDeleteId(null)}
         />
       )}
-    </>
+    </div>
   );
 }
 
