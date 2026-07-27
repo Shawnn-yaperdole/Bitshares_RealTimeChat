@@ -1,41 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-let logoBase64 = '';
-let logoFound = false;
-
-const possiblePaths = [
-  path.join(__dirname, '../../frontend/public/logo.png'),
-  path.join(__dirname, '../public/logo.png'),
-  path.join(__dirname, '../../public/logo.png'),
-  path.join(process.cwd(), 'frontend/public/logo.png'),
-  path.join(process.cwd(), 'public/logo.png'),
-];
-
-for (const testPath of possiblePaths) {
-  try {
-    if (fs.existsSync(testPath)) {
-      const logoBuffer = fs.readFileSync(testPath);
-      logoBase64 = logoBuffer.toString('base64');
-      logoFound = true;
-      console.log(`Logo found at: ${testPath}`);
-      break;
-    }
-  } catch (error) {
-  }
-}
-
-if (!logoFound) {
-  console.warn('Logo not found in any expected location. Using fallback URL.');
-}
+const LOGO_URL = "https://res.cloudinary.com/dbvpw74f8/image/upload/v1785134252/logo_dtslbb.png";
 
 export function createWelcomeEmailTemplate(name, clientURL) {
-  const logoSrc = logoBase64 ? `data:image/png;base64,${logoBase64}` : 'https://bitshareschat.onrender.com/logo.png';
-  
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -46,7 +11,7 @@ export function createWelcomeEmailTemplate(name, clientURL) {
   </head>
   <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f5f5f5;">
     <div style="background: linear-gradient(to right, #36D1DC, #5B86E5); padding: 30px; text-align: center; border-radius: 12px 12px 0 0;">
-      <img src="${logoSrc}" alt="Bitshares Logo" style="width: 80px; height: 80px; margin-bottom: 20px; border-radius: 50%; background-color: white; padding: 10px;">
+      <img src="${LOGO_URL}" alt="Bitshares Logo" style="width: 80px; height: 80px; margin-bottom: 20px; border-radius: 50%; background-color: white; padding: 10px;">
       <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 500;">Welcome to Bitshares!</h1>
     </div>
     <div style="background-color: #ffffff; padding: 35px; border-radius: 0 0 12px 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
