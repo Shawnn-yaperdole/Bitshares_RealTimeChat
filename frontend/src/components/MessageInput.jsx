@@ -43,7 +43,7 @@ function MessageInput() {
 
   return (
     <div
-      className="p-3 sm:p-4 border-t border-slate-700/50 flex-shrink-0"
+      className="sticky bottom-0 z-20 bg-slate-900 p-3 sm:p-4 border-t border-slate-700/50 flex-shrink-0"
       style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
     >
       {imagePreview && (

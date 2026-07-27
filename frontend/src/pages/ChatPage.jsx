@@ -11,7 +11,7 @@ function ChatPage() {
   const { activeTab, selectedUser } = useChatStore();
 
   return (
-    <div className="relative w-full h-dvh md:h-[min(800px,90dvh)] md:max-w-6xl overflow-hidden">
+    <div className="relative w-full h-full md:h-[min(800px,90dvh)] md:max-w-6xl overflow-hidden">
       <div className="relative w-full h-full min-h-0 flex overflow-hidden rounded-none md:rounded-2xl border-0 md:border border-slate-700/50 bg-slate-900">
         {/* LEFT SIDE - hidden on mobile once a chat is open */}
         <div
