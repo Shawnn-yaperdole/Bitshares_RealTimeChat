@@ -26,9 +26,10 @@ function ChatHeader() {
   return (
     <div
       className="flex justify-between items-center bg-slate-800/50 border-b
-   border-slate-700/50 max-h-[84px] px-4 md:px-6 py-3 flex-shrink-0"
+   border-slate-700/50 px-3 sm:px-4 md:px-6 py-3 flex-shrink-0"
+      style={{ paddingTop: "max(0.75rem, env(safe-area-inset-top))" }}
     >
-      <div className="flex items-center space-x-3 min-w-0">
+      <div className="flex items-center space-x-2 sm:space-x-3 min-w-0">
         <button
           onClick={() => setSelectedUser(null)}
           className="md:hidden text-slate-400 hover:text-slate-200 transition-colors flex-shrink-0"
@@ -37,7 +38,7 @@ function ChatHeader() {
         </button>
 
         <div className={`avatar ${isOnline ? "online" : "offline"}`}>
-          <div className="w-12 rounded-full">
+          <div className="w-10 sm:w-12 rounded-full">
             <img src={selectedUser.profilePic || "/avatar.png"} alt={selectedUser.fullName} />
           </div>
         </div>
@@ -48,7 +49,7 @@ function ChatHeader() {
         </div>
       </div>
 
-      <div className="flex items-center gap-4 flex-shrink-0">
+      <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
         <button
           onClick={() => toggleVanishMode(selectedUser._id)}
           title={isVanishMode ? "Turn off vanish mode" : "Turn on vanish mode"}

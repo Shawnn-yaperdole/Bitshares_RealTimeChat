@@ -103,9 +103,9 @@ function ChatContainer() {
           </div>
         )}
 
-        <div className="flex-1 px-6 overflow-y-auto py-8">
+        <div className="flex-1 px-3 sm:px-6 overflow-y-auto py-4 sm:py-8">
           {messages.length > 0 && !isMessagesLoading ? (
-            <div className="max-w-3xl mx-auto space-y-6">
+            <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
               {messages.map((msg) => {
                 const isOwnMessage = msg.senderId === authUser._id;
                 return (
@@ -114,7 +114,7 @@ function ChatContainer() {
                     className={`flex ${isOwnMessage ? "justify-end" : "justify-start"}`}
                   >
                     <div
-                      className={`flex items-end gap-1 max-w-[75%] group ${
+                      className={`flex items-end gap-1 max-w-[85%] sm:max-w-[75%] group ${
                         isOwnMessage ? "flex-row-reverse" : "flex-row"
                       }`}
                     >
@@ -131,10 +131,10 @@ function ChatContainer() {
                               <img
                                 src={msg.image}
                                 alt="Shared"
-                                className="rounded-lg h-48 object-cover"
+                                className="rounded-lg h-40 sm:h-48 object-cover max-w-full"
                               />
                             )}
-                            {msg.text && <p className="mt-2">{msg.text}</p>}
+                            {msg.text && <p className="mt-2 break-words">{msg.text}</p>}
                           </>
                         )}
                         <p className="text-xs mt-1 opacity-75 flex items-center gap-1">
@@ -150,7 +150,7 @@ function ChatContainer() {
                           onClick={() =>
                             setOpenMenuId(openMenuId === msg._id ? null : msg._id)
                           }
-                          className="text-slate-400 hover:text-slate-200 p-1 mb-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="text-slate-400 hover:text-slate-200 p-1 mb-1 flex-shrink-0 opacity-0 group-hover:opacity-100 active:opacity-100 transition-opacity"
                         >
                           <MoreVerticalIcon className="w-4 h-4" />
                         </button>

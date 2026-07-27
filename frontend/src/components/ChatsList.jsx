@@ -47,20 +47,20 @@ function ChatsList() {
       {chats.map((chat) => (
         <div
           key={chat._id}
-          className="relative group bg-cyan-500/10 p-4 rounded-lg cursor-pointer hover:bg-cyan-500/20 transition-colors"
+          className="relative group bg-cyan-500/10 p-3 sm:p-4 rounded-lg cursor-pointer hover:bg-cyan-500/20 transition-colors"
           onClick={() => setSelectedUser(chat)}
         >
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3 min-w-0">
               <div className={`avatar ${onlineUsers.includes(chat._id) ? "online" : "offline"}`}>
-                <div className="size-12 rounded-full">
+                <div className="size-10 sm:size-12 rounded-full">
                   <img src={chat.profilePic || "/avatar.png"} alt={chat.fullName} />
                 </div>
               </div>
               <h4 className="text-slate-200 font-medium truncate">{chat.fullName}</h4>
             </div>
 
-            <div className="relative opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="relative opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
